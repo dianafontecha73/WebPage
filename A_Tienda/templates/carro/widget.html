@@ -1,0 +1,98 @@
+ <table class="table table-bordered" style="color:white;">
+
+    <thead>
+
+        <tr>
+
+            <th colspan="3" class="text-center">
+
+                Carro de compra
+            </th>
+
+
+        </tr>
+
+        <tr>
+
+            <th>Productos</th>
+            <th>Cantidad</th>
+            <th>Suma</th>
+
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+        {% if request.session.carrito.items %} <!-- .carrito por ser el archivo de las funciones -->
+
+            {% for key, value in request.session.carrito.items  %}
+
+                <tr class="text-center">
+
+                    <!-- para que se vaya viendo el nombre del producto y se guarde la cantidad que el usuario seleccione-->
+
+                    <td>{{ value.nombre }}</td>
+                    <td>{{ value.cantidad }}</td>
+                    <td>
+
+                        <a class="btn btn-sm btn-success" href="{% url 'A_Carrito:agregar' value.producto_id %}">+</a> <!-- en la url se pone A_Carrito porque es en nombre de la app_name en la url.py de A_Carrito-->
+                        <a class="btn btn-sm btn-success" href="{% url 'A_Carrito:restar' value.producto_id %}">-</a><br/>
+
+                        {{ value.precio }} € 
+
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+        {% else %}
+        
+            <tr>
+
+                <td colspan="3">
+                    <div class="alert alert-danger text-center">
+                        Sin productos
+                    </div>
+                </td>
+
+            </tr>
+
+        {% endif %}
+
+    </tbody>
+
+    <tfoot>
+
+        <tr>
+
+            <td colspan="3">
+
+                <!-- variable global-->
+
+                Total: {{importe_total_carro}}€
+
+            </td>
+
+        </tr>
+
+        {% if request.session.carrito.items %} <!-- Para que el cuadro de Hacer pedido solo se vea cuando el usuario tiene lista una compra -->
+
+        <tr>
+
+            <td colspan="3" style="text-align:center;">
+
+                <a href="#" class="btn btn-success">Hacer pedido</a>
+
+            </td>
+
+        </tr>
+
+        {% endif %}
+
+    </tfoot>
+
+
+ </table>
+

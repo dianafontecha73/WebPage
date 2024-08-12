@@ -1,0 +1,43 @@
+<table class="table table-bordered" style="color:white;">
+    <thead>
+        <tr>
+            <th colspan="3" class="text-center">Carro de compra</th>
+        </tr>
+        <tr>
+            <th>Productos</th>
+            <th>Cantidad</th>
+            <th>Suma</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if carrito %}
+            {% for key, value in carrito.items %}
+                <tr class="text-center">
+                    <td>{{ value.nombre }}</td>
+                    <td>{{ value.cantidad }}</td>
+                    <td>
+                        <a class="btn btn-sm btn-success" href="{% url 'A_Carrito:agregar' key %}">+</a>
+                        <a class="btn btn-sm btn-warning" href="{% url 'A_Carrito:restar' key %}">-</a>
+                        <a class="btn btn-sm btn-danger" href="{% url 'A_Carrito:eliminar' key %}">Eliminar</a><br/>
+                        {{ value.precio }} €
+                    </td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="3">
+                    <div class="alert alert-danger text-center">
+                        Sin productos
+                    </div>
+                </td>
+            </tr>
+        {% endif %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3">
+                Total: {{ importe_total_carro }}€
+            </td>
+        </tr>
+    </tfoot>
+</table>
